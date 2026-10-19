@@ -85,7 +85,6 @@ All sensor data is located in the `Data/` directory from a 6-DOF IMU sensor.
 | `accel.csv` | Linear acceleration (3-axis) | 3 columns: X, Y, Z | m/s² |
 | `angles.csv` | Ground truth angles | Column 1: Roll, Column 2: Pitch | radians |
 
-**Note**: Movement profile during data collection: (??) | Ground truth captured using: (??)
 
 #### LSTM Training Dataset (dataset_1.csv)
 
@@ -286,7 +285,7 @@ All classical filters follow a consistent API pattern:
 - **Prediction horizon (N)**: 10 timesteps  
 - **Batch size**: 32
 - **Learning rate**: 0.001
-- **Hidden units**: 64
+- **Hidden units**: 128
 - **Attention mechanism**: Optional (see `LSTMNetwork.h` vs `LSTMNetworkNoAttention.h`)
 
 ### Key Parameters
