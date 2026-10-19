@@ -1,0 +1,13 @@
+*.gch
+.vscode/
+*.out
+build/
+.cache/
+compile_commands.json
+out/
+bin/
+.vs/
+AttitudeEstimation.vcxproj.user
+.idea/
+ReportLink.lnk
+cmake-build/

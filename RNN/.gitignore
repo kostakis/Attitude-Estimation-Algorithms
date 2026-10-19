@@ -1,0 +1,12 @@
+Python/venv
+*.o
+*.out
+Results
+Data
+# Saved models
+*.pt
+include/
+include
+# In case we extract at the git folder
+libtorch/
+.cache/

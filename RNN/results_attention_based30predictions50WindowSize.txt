@@ -1,0 +1,273 @@
+LSTM Multi-Step Ahead Prediction
+Configuration:
+  Lookback window (K): 50 timesteps
+  Prediction horizon (N): 30 timesteps
+  Input features: 9
+  Output features: 3
+  Epochs: 500
+  Random seed: 42
+
+Data/Quadcopter_Datasets/all_combined_reordered.csv rows: 21164 Cols: 9 (21164x9)
+Number of training samples: 21085 after removing windowSize and loopback
+Converted eigen matrix to Tensor
+Tensor shape: [21164, 9]
+Data standardized successfully.
+Angles tensor shape: [21164, 3]
+
+Data Shapes
+X (inputs):  [21085, 50, 9]
+y (targets): [21085, 30, 3]
+Windows shuffled before splitting (seed: 42)
+Train: 16868 | Val: 2108 | Test: 2109 (80/10/10 split)
+
+Model Created
+Architecture: Input(9) -> LSTM(128) -> Attention -> FC(90)
+
+Training Configuration
+Batch size: 64
+Epochs: 500
+Learning rate: 0.001
+Optimizer: Adam
+Loss function: torch::nn::MSELossImpl
+
+Starting Training
+Epoch   0 | Train Loss: 0.169134 | Val Loss: 0.040852
+Epoch   5 | Train Loss: 0.031458 | Val Loss: 0.022010
+Epoch  10 | Train Loss: 0.025012 | Val Loss: 0.017099
+Epoch  15 | Train Loss: 0.021425 | Val Loss: 0.012884
+Epoch  20 | Train Loss: 0.019285 | Val Loss: 0.009978
+Epoch  25 | Train Loss: 0.018027 | Val Loss: 0.009032
+Epoch  30 | Train Loss: 0.016804 | Val Loss: 0.007788
+Epoch  35 | Train Loss: 0.015971 | Val Loss: 0.007818
+Epoch  40 | Train Loss: 0.015242 | Val Loss: 0.006491
+Epoch  45 | Train Loss: 0.014836 | Val Loss: 0.006265
+Epoch  50 | Train Loss: 0.014571 | Val Loss: 0.005969
+Epoch  55 | Train Loss: 0.013966 | Val Loss: 0.005215
+Epoch  60 | Train Loss: 0.013742 | Val Loss: 0.005289
+Epoch  65 | Train Loss: 0.013617 | Val Loss: 0.005454
+Epoch  70 | Train Loss: 0.013786 | Val Loss: 0.005166
+Epoch  75 | Train Loss: 0.013275 | Val Loss: 0.004788
+Epoch  80 | Train Loss: 0.012929 | Val Loss: 0.004123
+Epoch  85 | Train Loss: 0.012886 | Val Loss: 0.004590
+Epoch  90 | Train Loss: 0.012497 | Val Loss: 0.004270
+Epoch  95 | Train Loss: 0.012489 | Val Loss: 0.003969
+  -- Saved model: lstm_model_epoch_100.pt
+Epoch 100 | Train Loss: 0.012426 | Val Loss: 0.003738
+Epoch 105 | Train Loss: 0.012213 | Val Loss: 0.003900
+Epoch 110 | Train Loss: 0.012167 | Val Loss: 0.003894
+Epoch 115 | Train Loss: 0.012240 | Val Loss: 0.003455
+Epoch 120 | Train Loss: 0.012086 | Val Loss: 0.003897
+Epoch 125 | Train Loss: 0.011905 | Val Loss: 0.003662
+Epoch 130 | Train Loss: 0.011737 | Val Loss: 0.003258
+Epoch 135 | Train Loss: 0.011728 | Val Loss: 0.003337
+Epoch 140 | Train Loss: 0.011705 | Val Loss: 0.003643
+Epoch 145 | Train Loss: 0.011809 | Val Loss: 0.003273
+Epoch 150 | Train Loss: 0.011753 | Val Loss: 0.003380
+Epoch 155 | Train Loss: 0.011610 | Val Loss: 0.003614
+Epoch 160 | Train Loss: 0.011476 | Val Loss: 0.002889
+Epoch 165 | Train Loss: 0.011543 | Val Loss: 0.003184
+Epoch 170 | Train Loss: 0.011587 | Val Loss: 0.003210
+Epoch 175 | Train Loss: 0.011335 | Val Loss: 0.003289
+Epoch 180 | Train Loss: 0.011374 | Val Loss: 0.002894
+Epoch 185 | Train Loss: 0.011344 | Val Loss: 0.002858
+Epoch 190 | Train Loss: 0.011237 | Val Loss: 0.002756
+Epoch 195 | Train Loss: 0.011171 | Val Loss: 0.002735
+  -- Saved model: lstm_model_epoch_200.pt
+Epoch 200 | Train Loss: 0.011179 | Val Loss: 0.002892
+Epoch 205 | Train Loss: 0.011217 | Val Loss: 0.002950
+Epoch 210 | Train Loss: 0.011116 | Val Loss: 0.002647
+Epoch 215 | Train Loss: 0.011272 | Val Loss: 0.002594
+Epoch 220 | Train Loss: 0.011087 | Val Loss: 0.002646
+Epoch 225 | Train Loss: 0.011189 | Val Loss: 0.003205
+Epoch 230 | Train Loss: 0.011083 | Val Loss: 0.002671
+Epoch 235 | Train Loss: 0.010984 | Val Loss: 0.002876
+Epoch 240 | Train Loss: 0.011023 | Val Loss: 0.002528
+Epoch 245 | Train Loss: 0.010967 | Val Loss: 0.002464
+Epoch 250 | Train Loss: 0.010798 | Val Loss: 0.002416
+Epoch 255 | Train Loss: 0.010860 | Val Loss: 0.002383
+Epoch 260 | Train Loss: 0.010961 | Val Loss: 0.002563
+Epoch 265 | Train Loss: 0.010868 | Val Loss: 0.002596
+Epoch 270 | Train Loss: 0.010837 | Val Loss: 0.002567
+Epoch 275 | Train Loss: 0.010901 | Val Loss: 0.002456
+Epoch 280 | Train Loss: 0.010973 | Val Loss: 0.002528
+Epoch 285 | Train Loss: 0.010561 | Val Loss: 0.002480
+Epoch 290 | Train Loss: 0.010881 | Val Loss: 0.002582
+Epoch 295 | Train Loss: 0.010753 | Val Loss: 0.002407
+  -- Saved model: lstm_model_epoch_300.pt
+Epoch 300 | Train Loss: 0.010675 | Val Loss: 0.002429
+Epoch 305 | Train Loss: 0.010812 | Val Loss: 0.002374
+Epoch 310 | Train Loss: 0.010866 | Val Loss: 0.002225
+Epoch 315 | Train Loss: 0.010704 | Val Loss: 0.002562
+Epoch 320 | Train Loss: 0.010538 | Val Loss: 0.002455
+Epoch 325 | Train Loss: 0.010760 | Val Loss: 0.002306
+Epoch 330 | Train Loss: 0.010678 | Val Loss: 0.002345
+Epoch 335 | Train Loss: 0.010683 | Val Loss: 0.002512
+Epoch 340 | Train Loss: 0.010542 | Val Loss: 0.002543
+Epoch 345 | Train Loss: 0.010716 | Val Loss: 0.002419
+Epoch 350 | Train Loss: 0.010631 | Val Loss: 0.002309
+Epoch 355 | Train Loss: 0.010426 | Val Loss: 0.002350
+Epoch 360 | Train Loss: 0.010604 | Val Loss: 0.002274
+Epoch 365 | Train Loss: 0.010602 | Val Loss: 0.002398
+Epoch 370 | Train Loss: 0.010599 | Val Loss: 0.002220
+Epoch 375 | Train Loss: 0.010526 | Val Loss: 0.002121
+Epoch 380 | Train Loss: 0.010510 | Val Loss: 0.002217
+Epoch 385 | Train Loss: 0.010446 | Val Loss: 0.002355
+Epoch 390 | Train Loss: 0.010461 | Val Loss: 0.002084
+Epoch 395 | Train Loss: 0.010650 | Val Loss: 0.002277
+  -- Saved model: lstm_model_epoch_400.pt
+Epoch 400 | Train Loss: 0.010457 | Val Loss: 0.002234
+Epoch 405 | Train Loss: 0.010419 | Val Loss: 0.002187
+Epoch 410 | Train Loss: 0.010370 | Val Loss: 0.002218
+Epoch 415 | Train Loss: 0.010390 | Val Loss: 0.002192
+Epoch 420 | Train Loss: 0.010317 | Val Loss: 0.002128
+Epoch 425 | Train Loss: 0.010326 | Val Loss: 0.002168
+Epoch 430 | Train Loss: 0.010421 | Val Loss: 0.002012
+Epoch 435 | Train Loss: 0.010421 | Val Loss: 0.002121
+Epoch 440 | Train Loss: 0.010375 | Val Loss: 0.002043
+Epoch 445 | Train Loss: 0.010295 | Val Loss: 0.002127
+Epoch 450 | Train Loss: 0.010331 | Val Loss: 0.002036
+Epoch 455 | Train Loss: 0.010358 | Val Loss: 0.001966
+Epoch 460 | Train Loss: 0.010259 | Val Loss: 0.002240
+Epoch 465 | Train Loss: 0.010368 | Val Loss: 0.002059
+Epoch 470 | Train Loss: 0.010338 | Val Loss: 0.002226
+Epoch 475 | Train Loss: 0.010291 | Val Loss: 0.002327
+Epoch 480 | Train Loss: 0.010354 | Val Loss: 0.002046
+Epoch 485 | Train Loss: 0.010356 | Val Loss: 0.001948
+Epoch 490 | Train Loss: 0.010322 | Val Loss: 0.001962
+Epoch 495 | Train Loss: 0.010224 | Val Loss: 0.002129
+Epoch 499 | Train Loss: 0.010196 | Val Loss: 0.002112
+  -- Saved model: lstm_model_epoch_500.pt
+
+Training Complete
+Elapsed(s) = 6243
+=== Training Metrics (16868 samples) ===
+Overall Metrics:
+  RMSE (all): 0.006496 rad = 0.372 deg
+  MAE  (all): 0.004814 rad = 0.276 deg
+
+RMSE per angle (all samples, all steps):
+  Roll  RMSE: 0.007401 rad = 0.424 deg 
+  Pitch RMSE: 0.005246 rad = 0.301 deg 
+  Yaw   RMSE: 0.006656 rad = 0.381 deg
+
+RMSE per step
+Step | Roll (deg) | Pitch (deg) | Yaw (deg)
+-----+------------+-------------+-----------
+   1 |   0.412988 |    0.301634 |  0.377902
+   2 |   0.392442 |    0.278337 |  0.364036
+   3 |   0.372306 |    0.265140 |  0.352223
+   4 |   0.370551 |    0.260769 |  0.346047
+   5 |   0.373177 |    0.265811 |  0.342789
+   6 |   0.375699 |    0.273639 |  0.338762
+   7 |   0.385637 |    0.279832 |  0.341096
+   8 |   0.390600 |    0.284171 |  0.342864
+   9 |   0.392523 |    0.289303 |  0.343272
+  10 |   0.396913 |    0.290722 |  0.347080
+  11 |   0.409781 |    0.289635 |  0.351947
+  12 |   0.412698 |    0.288053 |  0.353680
+  13 |   0.405211 |    0.285995 |  0.358088
+  14 |   0.411130 |    0.286143 |  0.364311
+  15 |   0.412861 |    0.287137 |  0.375006
+  16 |   0.416203 |    0.288522 |  0.382456
+  17 |   0.420903 |    0.290117 |  0.386365
+  18 |   0.431309 |    0.294754 |  0.388735
+  19 |   0.433743 |    0.299907 |  0.384809
+  20 |   0.436721 |    0.304618 |  0.381488
+  21 |   0.444450 |    0.308023 |  0.378306
+  22 |   0.452559 |    0.305233 |  0.376752
+  23 |   0.438187 |    0.304120 |  0.375197
+  24 |   0.435214 |    0.301130 |  0.378647
+  25 |   0.437268 |    0.298923 |  0.386287
+  26 |   0.440509 |    0.302897 |  0.398305
+  27 |   0.449760 |    0.316823 |  0.420058
+  28 |   0.460830 |    0.338223 |  0.447471
+  29 |   0.499670 |    0.371274 |  0.472199
+  30 |   0.556334 |    0.419642 |  0.521364
+
+=== Validation Metrics (2108 samples) ===
+Overall Metrics:
+  RMSE (all): 0.006779 rad = 0.388 deg
+  MAE  (all): 0.004972 rad = 0.285 deg
+
+RMSE per angle (all samples, all steps):
+  Roll  RMSE: 0.007771 rad = 0.445 deg 
+  Pitch RMSE: 0.005424 rad = 0.311 deg 
+  Yaw   RMSE: 0.006932 rad = 0.397 deg
+
+RMSE per step
+Step | Roll (deg) | Pitch (deg) | Yaw (deg)
+-----+------------+-------------+-----------
+   1 |   0.449576 |    0.301696 |  0.340585
+   2 |   0.432969 |    0.280834 |  0.330397
+   3 |   0.419351 |    0.269263 |  0.327831
+   4 |   0.391957 |    0.264857 |  0.323749
+   5 |   0.391985 |    0.272731 |  0.329524
+   6 |   0.398317 |    0.282419 |  0.341612
+   7 |   0.411230 |    0.291239 |  0.352426
+   8 |   0.418726 |    0.300956 |  0.381455
+   9 |   0.423484 |    0.310120 |  0.400350
+  10 |   0.433365 |    0.313418 |  0.409970
+  11 |   0.430955 |    0.308352 |  0.408963
+  12 |   0.433482 |    0.311466 |  0.416410
+  13 |   0.423708 |    0.307140 |  0.417771
+  14 |   0.478844 |    0.306190 |  0.456055
+  15 |   0.456798 |    0.298465 |  0.440351
+  16 |   0.436172 |    0.296712 |  0.430211
+  17 |   0.437401 |    0.297650 |  0.415255
+  18 |   0.441313 |    0.300587 |  0.401015
+  19 |   0.442688 |    0.304125 |  0.385205
+  20 |   0.440059 |    0.310066 |  0.379202
+  21 |   0.449013 |    0.315539 |  0.375021
+  22 |   0.452339 |    0.312079 |  0.376089
+  23 |   0.443619 |    0.308128 |  0.369113
+  24 |   0.438911 |    0.309015 |  0.376556
+  25 |   0.442184 |    0.310607 |  0.390070
+  26 |   0.449715 |    0.312490 |  0.405779
+  27 |   0.460864 |    0.325346 |  0.424019
+  28 |   0.482485 |    0.347594 |  0.449186
+  29 |   0.524047 |    0.381617 |  0.477648
+  30 |   0.577945 |    0.427100 |  0.507554
+
+=== Test Metrics (2109 samples) ===
+Overall Metrics:
+  RMSE (all): 0.007329 rad = 0.420 deg
+  MAE  (all): 0.005051 rad = 0.289 deg
+
+RMSE per angle (all samples, all steps):
+  Roll  RMSE: 0.008238 rad = 0.472 deg 
+  Pitch RMSE: 0.005502 rad = 0.315 deg 
+  Yaw   RMSE: 0.007937 rad = 0.455 deg
+
+RMSE per step
+Step | Roll (deg) | Pitch (deg) | Yaw (deg)
+-----+------------+-------------+-----------
+   1 |   0.493901 |    0.314473 |  0.504377
+   2 |   0.424325 |    0.287265 |  0.358638
+   3 |   0.409333 |    0.274881 |  0.360315
+   4 |   0.405631 |    0.267152 |  0.370243
+   5 |   0.419605 |    0.272282 |  0.388441
+   6 |   0.431725 |    0.285297 |  0.410486
+   7 |   0.439486 |    0.289621 |  0.387821
+   8 |   0.425139 |    0.294522 |  0.390908
+   9 |   0.425392 |    0.297485 |  0.396051
+  10 |   0.421496 |    0.292874 |  0.410310
+  11 |   0.433294 |    0.292551 |  0.429239
+  12 |   0.463893 |    0.294288 |  0.436385
+  13 |   0.484631 |    0.295619 |  0.456422
+  14 |   0.478349 |    0.294923 |  0.449827
+  15 |   0.459291 |    0.292497 |  0.435695
+  16 |   0.446040 |    0.287667 |  0.428078
+  17 |   0.441312 |    0.288685 |  0.424419
+  18 |   0.468202 |    0.298047 |  0.429193
+  19 |   0.481471 |    0.304070 |  0.438883
+  20 |   0.479942 |    0.311544 |  0.429329
+  21 |   0.488008 |    0.318798 |  0.422197
+  22 |   0.490203 |    0.320166 |  0.421644
+  23 |   0.482229 |    0.322855 |  0.425612
+  24 |   0.485341 |    0.326339 |  0.434455
+  25 |   0.493830 |    0.327162 |  0.483156
+  26 |   0.504193 |    0.337573 |  0.537031
+  27 |   0.510617 |    0.350718 |  0.535979
+  28 |   0.519223 |    0.371165 |  0.541115
+  29 |   0.572631 |    0.411384 |  0.655841
+  30 |   0.613874 |    0.458073 |  0.669400

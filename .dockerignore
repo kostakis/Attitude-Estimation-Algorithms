@@ -1,0 +1,39 @@
+# Build artifacts
+RNN/*.out
+RNN/*.pt
+build/
+bin/
+*.o
+*.a
+
+# Git
+.git
+.gitignore
+
+# Documentation
+MDFiles/
+Pappers/
+*.md
+README.md
+CLAUDE.md
+
+# Results
+Results/
+ArchiveDoNotTouch/
+
+# IDE
+.vscode/
+.idea/
+compile_commands.json
+
+# Temporary files
+tmp.txt
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Other unnecessary files
+.gcloudignore
+Dockerfile
