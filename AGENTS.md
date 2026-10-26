@@ -249,5 +249,6 @@ The `Utils` class provides critical operations for attitude estimation:
 
 - **Requires Eigen 3.4.1 specifically** (other versions may cause compilation failures)
 - **g++ with C++14 support** for classical filters, **C++17 for LSTM**
+- **spdlog**: Logging library for C++ (https://github.com/gabime/spdlog)
 - **Python 3** with matplotlib, numpy for visualization
 - **LibTorch C++** for LSTM (must be downloaded separately from PyTorch website)

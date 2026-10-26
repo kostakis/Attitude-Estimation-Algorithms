@@ -44,12 +44,14 @@ All filters demonstrate real-time capability with sampling at 50Hz (dt=0.02s).
 ### Classical Filters (Core)
 - **C++ Compiler**: g++ with C++14 support
 - **Eigen3**: Linear algebra library (must be in system include paths) - **Version 3.4.1 required**
+- **spdlog**: Logging library for C++ (https://github.com/gabime/spdlog)
 - **Make**: Build system
 - **Python 3** with matplotlib: For result visualization (optional)
 - **bear**: For generating compile_commands.json (optional, for IDE support)
 
 ### LSTM (Deep Learning Component)
 - **LibTorch C++**: PyTorch C++ API for LSTM implementation
+- **spdlog**: Logging library for C++ (https://github.com/gabime/spdlog)
 - **C++17**: Required for LibTorch compatibility
 - **Python 3** with matplotlib, numpy, torch: For training and visualization
 
