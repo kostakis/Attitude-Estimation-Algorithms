@@ -1,4 +1,5 @@
 #include "ExtendedKalmanFilter.hpp"
+#include <iostream>
 
 ExtendedKalmanFilter::ExtendedKalmanFilter(double dt, const Eigen::Vector3d& initial_accel) : dt(dt) {
     // Initialize state vector (7x1)
@@ -105,13 +106,15 @@ void ExtendedKalmanFilter::setIMUData(const Eigen::MatrixXd& gyroData, const Eig
     this->accelometerData = accelData;
 
     if(gyroData.rows() != accelData.rows()) {
-        std::cout << "Wrong data\n";
+        std::cerr << "Gyro and accelerometer data should have the same size, exiting\n";
         exit(-1);
     }
 
     int numSamples = static_cast<int>(gyroData.rows());
     rollEstimation.resize(numSamples);
     pitchEstimation.resize(numSamples);
+
+    // Make sure everything is zero
     rollEstimation.setZero();
     pitchEstimation.setZero();
 }
@@ -211,7 +214,6 @@ Eigen::MatrixXd ExtendedKalmanFilter::computeF(const Eigen::Vector3d& w) const {
     F.block<4, 3>(0, 4) = F_qb;
 
     // F_bb (3x3) - bias w.r.t bias is identity (already set)
-
     return F;
 }
 
@@ -247,6 +249,5 @@ Eigen::MatrixXd ExtendedKalmanFilter::computeH() const {
 
     // H_b (3x3) - derivative w.r.t bias is zero (measurement doesn't depend on bias)
     // Already initialized to zero
-
     return H;
 }

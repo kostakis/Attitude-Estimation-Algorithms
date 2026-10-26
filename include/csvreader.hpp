@@ -12,6 +12,7 @@
 using Eigen::MatrixXd;
 using std::vector;
 
+// assert is just for local should not be used at prod ..
 class CsvReader {
   private:
     std::string fileName;
@@ -41,7 +42,7 @@ class CsvReader {
 
         if(!file.is_open()) {
             throw std::runtime_error("Could not open file: " + fileName +
-                "Binaries should be run from the root folder");
+                                     "Binaries should be run from the root folder");
         }
 
         std::string line;

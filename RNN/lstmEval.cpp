@@ -6,13 +6,13 @@
 #include "LSTMNetwork.h"
 #endif
 
-#include <exception>
-#include <string>
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <random>
 #include <algorithm>
+#include <exception>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <random>
+#include <string>
 #include <vector>
 
 #include <torch/torch.h>
@@ -20,15 +20,16 @@
 using torch::Tensor;
 
 bool isNumber(const std::string& str) {
-    if (str.empty()) return false;
-    
+    if(str.empty())
+        return false;
+
     try {
         std::size_t pos;
         std::stoi(str, &pos);
         return pos == str.length(); // ensure entire string was converted
-    } catch (const std::invalid_argument&) {
+    } catch(const std::invalid_argument&) {
         return false;
-    } catch (const std::out_of_range&) {
+    } catch(const std::out_of_range&) {
         return false;
     }
 }
@@ -51,7 +52,7 @@ int main(int argc, char* argv[]) {
     bool saveAll = false;
     std::string modelPath;
     int sampleIndex = 0;
-    int windowSize = 10;  // Default, override with --window N
+    int windowSize = 10; // Default, override with --window N
 
     if(argc == 1) {
         std::cout << "Wrong input use -h to see help" << std::endl;
@@ -60,15 +61,15 @@ int main(int argc, char* argv[]) {
 
     // Check if first argument is a help flag
     std::string firstArg = argv[1];
-    if (firstArg == "--help" || firstArg == "-h") {
+    if(firstArg == "--help" || firstArg == "-h") {
         return printHelpMessageAndExit();
     }
 
     modelPath = firstArg;
 
-    for (int i = 2; i < argc; i++) {
+    for(int i = 2; i < argc; i++) {
         std::string arg = argv[i];
-        if(arg == "--save-all" || arg == "-a" ) {
+        if(arg == "--save-all" || arg == "-a") {
             saveAll = true;
         } else if((arg == "--window" || arg == "-w") && i + 1 < argc) {
             windowSize = std::stoi(argv[i + 1]);
@@ -82,16 +83,16 @@ int main(int argc, char* argv[]) {
     }
 
     // Model Configuration
-    const int lookbackWindow = 50;  // Must match training
+    const int lookbackWindow = 50; // Must match training
     const int NUM_INPUT_FEATURES = 9;
     const int NUM_OUTPUT_FEATURES = 3;
     const int outputSize = windowSize * NUM_OUTPUT_FEATURES;
     const int hiddenStateSize = 128;
-    const unsigned int randomSeed = 42;  // Must match training for shuffle
+    const unsigned int randomSeed = 42; // Must match training for shuffle
 
     std::cout << "LSTM Model Evaluation" << std::endl;
     std::cout << "Model: " << modelPath << std::endl;
-    if (saveAll) {
+    if(saveAll) {
         std::cout << "Mode: Generate predictions for ALL samples" << std::endl;
     } else {
         std::cout << "Mode: Single sample evaluation (index: " << sampleIndex << ")" << std::endl;
@@ -107,7 +108,7 @@ int main(int argc, char* argv[]) {
     try {
         torch::load(model, modelPath);
         std::cout << "Model loaded successfully!" << std::endl;
-    } catch (const std::exception &e) {
+    } catch(const std::exception& e) {
         std::cerr << "Error loading model: " << e.what() << std::endl;
         return -1;
     }
@@ -138,7 +139,7 @@ int main(int argc, char* argv[]) {
     Tensor X = torch::zeros({trainingSamples, lookbackWindow, NUM_INPUT_FEATURES}, options_w);
     Tensor y = torch::zeros({trainingSamples, windowSize, NUM_OUTPUT_FEATURES}, options_w);
 
-    for (int i = 0; i < trainingSamples; i++) {
+    for(int i = 0; i < trainingSamples; i++) {
         X[i] = scaledDatasetTensor.slice(0, i, i + lookbackWindow);
         int predStart = i + lookbackWindow;
         y[i] = anglesTensor.slice(0, predStart, predStart + windowSize);
@@ -146,13 +147,16 @@ int main(int argc, char* argv[]) {
 
     // Shuffle windows
     std::vector<int> shuffleIndices(trainingSamples);
-    for (int i = 0; i < trainingSamples; i++) shuffleIndices[i] = i;
+    for(int i = 0; i < trainingSamples; i++) {
+        shuffleIndices[i] = i;
+    }
+
     std::mt19937 shuffleRng(randomSeed);
     std::shuffle(shuffleIndices.begin(), shuffleIndices.end(), shuffleRng);
 
     Tensor X_shuffled = torch::zeros_like(X);
     Tensor y_shuffled = torch::zeros_like(y);
-    for (int i = 0; i < trainingSamples; i++) {
+    for(int i = 0; i < trainingSamples; i++) {
         X_shuffled[i] = X[shuffleIndices[i]];
         y_shuffled[i] = y[shuffleIndices[i]];
     }
@@ -171,20 +175,22 @@ int main(int argc, char* argv[]) {
     Tensor y_test = y_shuffled.slice(0, numTrain + numVal, trainingSamples);
 
     std::cout << "Data normalized (z-score standardization)" << std::endl;
-    std::cout << "Train: " << numTrain << " | Val: " << numVal << " | Test: " << numTest << " (80/10/10 split)" << std::endl;
+    std::cout << "Train: " << numTrain << " | Val: " << numVal << " | Test: " << numTest << " (80/10/10 split)"
+              << std::endl;
     std::cout << std::endl;
 
     // Evaluate all splits
     model->eval();
     {
         torch::NoGradGuard no_grad;
-        evaluateSet(model, X_train, y_train, numTrain, windowSize, NUM_OUTPUT_FEATURES, targetStd, targetMean, "Training");
+        evaluateSet(model, X_train, y_train, numTrain, windowSize, NUM_OUTPUT_FEATURES, targetStd, targetMean,
+                    "Training");
         evaluateSet(model, X_val, y_val, numVal, windowSize, NUM_OUTPUT_FEATURES, targetStd, targetMean, "Validation");
         evaluateSet(model, X_test, y_test, numTest, windowSize, NUM_OUTPUT_FEATURES, targetStd, targetMean, "Test");
     }
 
     // Handle --save-all mode
-    if (saveAll) {
+    if(saveAll) {
         std::cout << "Generating predictions for " << trainingSamples << " samples..." << std::endl;
 
         model->eval();
@@ -192,7 +198,7 @@ int main(int argc, char* argv[]) {
 
         // Open output file
         std::ofstream outFile("Results/lstm_predictions.csv"); // Rename after app ends to proper name ...
-        if (!outFile.is_open()) {
+        if(!outFile.is_open()) {
             std::cerr << "Error: Could not open Results/lstm_predictions.csv for writing" << std::endl;
             return 1;
         }
@@ -201,7 +207,7 @@ int main(int argc, char* argv[]) {
         outFile << "sample,step_ahead,roll_pred,pitch_pred,yaw_pred,roll_gt,pitch_gt,yaw_gt,set" << std::endl;
 
         // Process all shuffled samples
-        for (int sample = 0; sample < trainingSamples; sample++) {
+        for(int sample = 0; sample < trainingSamples; sample++) {
             // Get prediction from shuffled window
             Tensor input = X_shuffled[sample].unsqueeze(0);
             Tensor output = model->forward(input);
@@ -213,16 +219,16 @@ int main(int argc, char* argv[]) {
 
             // Determine set label
             std::string setLabel;
-            if (sample < numTrain) { 
+            if(sample < numTrain) {
                 setLabel = "train";
-            } else if (sample < numTrain + numVal) {
+            } else if(sample < numTrain + numVal) {
                 setLabel = "val";
             } else {
                 setLabel = "test";
             }
 
             // Write predictions for each step
-            for (int step = 0; step < windowSize; step++) {
+            for(int step = 0; step < windowSize; step++) {
                 int stepAhead = step + 1;
 
                 auto pred = unscaledPred[step];
@@ -235,14 +241,12 @@ int main(int argc, char* argv[]) {
                 double pitch_gt = gt[1].item<double>();
                 double yaw_gt = gt[2].item<double>();
 
-                outFile << sample << "," << stepAhead << ","
-                       << roll_pred << "," << pitch_pred << "," << yaw_pred << ","
-                       << roll_gt << "," << pitch_gt << "," << yaw_gt << ","
-                       << setLabel << std::endl;
+                outFile << sample << "," << stepAhead << "," << roll_pred << "," << pitch_pred << "," << yaw_pred << ","
+                        << roll_gt << "," << pitch_gt << "," << yaw_gt << "," << setLabel << std::endl;
             }
 
             // Progress indicator
-            if (sample % 500 == 0) {
+            if(sample % 500 == 0) {
                 std::cout << "  Processed " << sample << "/" << trainingSamples << " samples" << std::endl;
             }
         }
@@ -254,22 +258,21 @@ int main(int argc, char* argv[]) {
     }
 
     // Single sample evaluation mode (index into shuffled windows)
-    if (sampleIndex >= trainingSamples) {
+    if(sampleIndex >= trainingSamples) {
         std::cerr << "Sample index too large! Max: " << trainingSamples - 1 << std::endl;
         return 1;
     }
 
     // Determine which set this sample belongs to
     std::string setLabel;
-    if (sampleIndex < numTrain) {
+    if(sampleIndex < numTrain) {
         setLabel = "train";
-    } else if (sampleIndex < numTrain + numVal) {
+    } else if(sampleIndex < numTrain + numVal) {
         setLabel = "val";
-    }
-    else {
+    } else {
         setLabel = "test";
     }
-    
+
     std::cout << "Sample " << sampleIndex << " belongs to: " << setLabel << " set" << std::endl;
     std::cout << std::endl;
 
@@ -299,9 +302,9 @@ int main(int argc, char* argv[]) {
     Tensor error = unscaledPred - groundTruth;
     Tensor rmse = error.pow(2).mean().sqrt();
     std::cout << "=== Error Metrics ===" << std::endl;
-    std::cout << "RMSE: " << std::fixed << std::setprecision(6)
-              << rmse.item<double>() << " rad = "
-              << std::setprecision(3) << Utils::convertToDeg(rmse.item<double>()) << " degrees" << std::endl;
+    std::cout << "RMSE: " << std::fixed << std::setprecision(6) << rmse.item<double>()
+              << " rad = " << std::setprecision(3) << Utils::convertToDeg(rmse.item<double>()) << " degrees"
+              << std::endl;
 
     return 0;
 }

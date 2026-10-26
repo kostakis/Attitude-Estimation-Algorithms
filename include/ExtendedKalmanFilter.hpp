@@ -5,13 +5,9 @@
 
 class ExtendedKalmanFilter {
   public:
-    // Constructor
     ExtendedKalmanFilter(double dt, const Eigen::Vector3d& initial_accel);
 
-    // Set IMU data (matches MahonyFilter pattern)
     void setIMUData(const Eigen::MatrixXd& gyroData, const Eigen::MatrixXd& accelData);
-
-    // Main processing function (matches MahonyFilter pattern)
     void predictForAllData();
 
     // Get estimations (matches MahonyFilter pattern)
@@ -21,13 +17,14 @@ class ExtendedKalmanFilter {
     const Eigen::VectorXd& getPitchEstimation() const;
     Eigen::VectorXd& getPitchEstimationNonConst();
 
-    // Get current state
     Eigen::VectorXd getState() const {
         return x;
     }
+
     Eigen::Vector4d getQuaternion() const {
         return x.head<4>();
     }
+
     Eigen::Vector3d getBias() const {
         return x.tail<3>();
     }
@@ -48,11 +45,10 @@ class ExtendedKalmanFilter {
     // Time step
     double dt;
 
-    // IMU Input (matches MahonyFilter pattern)
     Eigen::MatrixXd gyroData;
     Eigen::MatrixXd accelometerData;
 
-    // Predictions - In rad (matches MahonyFilter pattern)
+    // Predictions - In rad
     Eigen::VectorXd rollEstimation;
     Eigen::VectorXd pitchEstimation;
 

@@ -8,8 +8,7 @@ ExplicitComplementaryFilter::ExplicitComplementaryFilter(double dt, double kp, d
     v0_gravity << 0.0, 0.0, 1.0;
 }
 
-void ExplicitComplementaryFilter::setIMUData(const Eigen::MatrixXd& gyroData,
-                                              const Eigen::MatrixXd& accelData) {
+void ExplicitComplementaryFilter::setIMUData(const Eigen::MatrixXd& gyroData, const Eigen::MatrixXd& accelData) {
     this->gyroData = gyroData;
     this->accelerometerData = accelData;
 
@@ -51,8 +50,7 @@ void ExplicitComplementaryFilter::predictForAllData() {
     }
 }
 
-void ExplicitComplementaryFilter::update(const Eigen::Vector3d& omega_y,
-                                          const Eigen::Vector3d& v_measured) {
+void ExplicitComplementaryFilter::update(const Eigen::Vector3d& omega_y, const Eigen::Vector3d& v_measured) {
     // Compute estimated gravity direction in body frame: v̂ = R̂ᵀ v₀
     Eigen::Vector3d v_estimated = rHat.transpose() * v0_gravity;
 
@@ -75,8 +73,8 @@ void ExplicitComplementaryFilter::update(const Eigen::Vector3d& omega_y,
     orthonormalize();
 }
 
-Eigen::Vector3d ExplicitComplementaryFilter::computeOmegaMeasurement(
-    const Eigen::Vector3d& v_measured, const Eigen::Vector3d& v_estimated) const {
+Eigen::Vector3d ExplicitComplementaryFilter::computeOmegaMeasurement(const Eigen::Vector3d& v_measured,
+                                                                     const Eigen::Vector3d& v_estimated) const {
 
     // Equation (32c) from paper: ωₘₑₛ = Σᵢ kᵢ(vᵢ × v̂ᵢ)
     // For single vector (gravity only), this simplifies to:
@@ -101,7 +99,7 @@ void ExplicitComplementaryFilter::orthonormalize() {
     // Ensure det(R̂) = +1 (proper rotation, not reflection)
     if(rHat.determinant() < 0) {
         Eigen::Matrix3d U = svd.matrixU();
-        U.col(2) *= -1;  // Flip sign of last column
+        U.col(2) *= -1; // Flip sign of last column
         rHat = U * svd.matrixV().transpose();
     }
 }
