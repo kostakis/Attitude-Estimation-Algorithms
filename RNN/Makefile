@@ -17,10 +17,10 @@ CXXFLAGS = -std=c++17 -g -Wall -O0 -D_GLIBCXX_USE_CXX11_ABI=0
 all: lstm lstmEval lstmEvalNoAttn
 
 # EXAMPLES
-# example: mainExample.cpp
-# 	$(CXX) $(CXXFLAGS) $(LIBTORCH_INCLUDE) \
-# 		mainExample.cpp -o example.out \
-# 		$(LIBTORCH_LIBS) $(LIBTORCH_RPATH)
+example: mainExample.cpp
+	$(CXX) $(CXXFLAGS) $(LIBTORCH_INCLUDE) \
+		mainExample.cpp -o example.out \
+		$(LIBTORCH_LIBS) $(LIBTORCH_RPATH) -lspdlog
 
 # lstmExample: lstmExample.cpp
 # 	$(CXX) $(CXXFLAGS) $(LIBTORCH_INCLUDE) \
